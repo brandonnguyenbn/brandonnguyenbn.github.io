@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Brandon Nguyen — Mechanical Engineering Portfolio</title>
+<meta name="description" content="Mechanical engineering portfolio: research, design, and manufacturing projects.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f6f5f1;
+    --surface: #ffffff;
+    --text: #1d1d1b;
+    --muted: #5f5e58;
+    --line: #e2dfd6;
+    --accent: #1f5f8b;
+    --accent-soft: #e3eef6;
+    --tag: #efece4;
+  }
+  :root[data-theme="dark"] {
+    --bg: #121416;
+    --surface: #1b1e21;
+    --text: #ecebe7;
+    --muted: #a3a29c;
+    --line: #2c3035;
+    --accent: #6fb0dd;
+    --accent-soft: #1d2d3a;
+    --tag: #25292d;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: "Inter", system-ui, sans-serif;
+    line-height: 1.6;
+    transition: background .2s, color .2s;
+  }
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  .wrap { max-width: 960px; margin: 0 auto; padding: 0 20px; }
+
+  /* Nav */
+  nav {
+    position: sticky; top: 0; z-index: 10;
+    background: var(--bg);
+    border-bottom: 1px solid var(--line);
+  }
+  nav .wrap { display: flex; align-items: center; justify-content: space-between; height: 60px; gap: 16px; }
+  .brand { font-weight: 700; color: var(--text); }
+  .links { display: flex; gap: 20px; align-items: center; }
+  .links a { color: var(--muted); font-size: 14px; font-weight: 500; }
+  .links a:hover { color: var(--text); text-decoration: none; }
+  #theme {
+    background: none; border: 1px solid var(--line); color: var(--text);
+    border-radius: 6px; padding: 4px 10px; font: inherit; font-size: 13px; cursor: pointer;
+  }
+  #menu { display: none; background: none; border: none; color: var(--text); font-size: 22px; cursor: pointer; }
+
+  /* Hero */
+  header { padding: 80px 0 56px; }
+  .eyebrow { font-family: "JetBrains Mono", monospace; font-size: 13px; color: var(--accent); letter-spacing: .05em; }
+  h1 { font-size: clamp(36px, 6vw, 56px); line-height: 1.1; margin: 12px 0 16px; }
+  .lede { font-size: 18px; color: var(--muted); max-width: 620px; }
+  .cta { display: flex; gap: 12px; margin-top: 28px; flex-wrap: wrap; }
+  .btn {
+    display: inline-block; padding: 10px 18px; border-radius: 8px; font-weight: 600; font-size: 15px;
+    border: 1px solid var(--accent);
+  }
+  .btn.primary { background: var(--accent); color: var(--bg); }
+  .btn:hover { text-decoration: none; opacity: .9; }
+
+  /* Sections */
+  section { padding: 56px 0; border-top: 1px solid var(--line); }
+  h2 { font-size: 28px; margin-bottom: 28px; }
+  h3 { font-size: 19px; line-height: 1.3; }
+
+  /* Project cards */
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; }
+  .card {
+    background: var(--surface); border: 1px solid var(--line); border-radius: 12px;
+    overflow: hidden; display: flex; flex-direction: column;
+  }
+  .card img, .ph {
+    width: 100%; aspect-ratio: 16 / 10; object-fit: cover; display: block;
+    background: var(--tag);
+  }
+  .ph {
+    display: flex; align-items: center; justify-content: center;
+    color: var(--muted); font-size: 13px; font-family: "JetBrains Mono", monospace;
+    border-bottom: 1px dashed var(--line);
+  }
+  .card-body { padding: 18px; display: flex; flex-direction: column; gap: 10px; flex: 1; }
+  .status {
+    align-self: flex-start; font-size: 12px; font-weight: 600; padding: 2px 10px; border-radius: 99px;
+    background: var(--accent-soft); color: var(--accent);
+  }
+  .card p { color: var(--muted); font-size: 15px; }
+  .tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: auto; padding-top: 6px; }
+  .tags span { background: var(--tag); font-size: 12px; padding: 2px 8px; border-radius: 4px; color: var(--muted); }
+
+  /* Experience */
+  .job { display: grid; grid-template-columns: 200px 1fr; gap: 24px; padding: 22px 0; border-bottom: 1px solid var(--line); }
+  .job:last-child { border-bottom: none; }
+  .when { color: var(--muted); font-size: 14px; font-family: "JetBrains Mono", monospace; }
+  .org { color: var(--accent); font-weight: 600; font-size: 15px; margin: 2px 0 8px; }
+  .job ul { padding-left: 18px; color: var(--muted); font-size: 15px; }
+  .job li { margin: 4px 0; }
+
+  /* Skills */
+  .skills { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; }
+  .skill-box { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 20px; }
+  .skill-box h3 { font-size: 15px; margin-bottom: 12px; color: var(--muted); font-weight: 600; }
+
+  /* About / Education */
+  .two { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; }
+  .about p { color: var(--muted); margin-bottom: 12px; }
+  .edu { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 22px; }
+  .edu p { color: var(--muted); font-size: 15px; }
+
+  footer { padding: 40px 0 60px; border-top: 1px solid var(--line); color: var(--muted); font-size: 14px; }
+  .contact-links { display: flex; gap: 20px; flex-wrap: wrap; margin-bottom: 16px; font-size: 16px; }
+
+  @media (max-width: 720px) {
+    #menu { display: block; }
+    .links {
+      display: none; position: absolute; top: 60px; left: 0; right: 0;
+      flex-direction: column; align-items: flex-start; gap: 14px;
+      background: var(--bg); border-bottom: 1px solid var(--line); padding: 16px 20px;
+    }
+    .links.open { display: flex; }
+    .job, .two { grid-template-columns: 1fr; gap: 8px; }
+    .two { gap: 24px; }
+    header { padding: 56px 0 40px; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <a href="#top" class="brand">Brandon Nguyen</a>
+    <button id="menu" aria-label="Menu">☰</button>
+    <div class="links" id="links">
+      <a href="#projects">Projects</a>
+      <a href="#experience">Experience</a>
+      <a href="#skills">Skills</a>
+      <a href="#about">About</a>
+      <a href="#contact">Contact</a>
+      <button id="theme" aria-label="Toggle dark mode">◐ Dark</button>
+    </div>
+  </div>
+</nav>
+
+<header id="top">
+  <div class="wrap">
+    <div class="eyebrow">MECHANICAL ENGINEERING · UMASS AMHERST</div>
+    <h1>Brandon Nguyen</h1>
+    <p class="lede">Mechanical engineering student working on wind turbine airfoil research, product design, and 3D-printed prototypes. Background in residential HVAC installation and thermodynamics teaching.</p>
+    <div class="cta">
+      <a class="btn primary" href="#projects">View projects</a>
+      <a class="btn" href="resume.pdf" target="_blank">Resume (PDF)</a>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+
+<section id="projects">
+  <div class="wrap">
+    <h2>Projects</h2>
+    <div class="grid">
+
+      <article class="card">
+        <!-- Replace with: <img src="images/airfoil.png" alt="PBAP vs CST airfoil fit comparison"> -->
+        <div class="ph">images/airfoil.png</div>
+        <div class="card-body">
+          <span class="status">In progress · Research</span>
+          <h3>Physics-Based Airfoil Parameterization Validation</h3>
+          <p>At the UMass Amherst Wind Energy Center, I'm testing whether a physics-based airfoil parameterization (PBAP) can match the industry-standard CST method in shape-fitting accuracy, and whether better fits carry over to lift and drag performance. Work so far includes a 42-airfoil database and 500+ XFOIL simulations.</p>
+          <div class="tags"><span>Python</span><span>XFOIL</span><span>Optimization</span><span>Aerodynamics</span></div>
+        </div>
+      </article>
+
+      <article class="card">
+        <!-- Replace with: <img src="images/pot-handle.jpg" alt="Removable pot handle prototype"> -->
+        <div class="ph">images/pot-handle.jpg</div>
+        <div class="card-body">
+          <span class="status">In progress · MIE 340 team project</span>
+          <h3>Removable Pot Handle / Carabiner</h3>
+          <p>A slip-on removable handle for camping cookware that doubles as a carabiner and multitool. Designed as a team for MIE 340, with a focus on a secure attachment that doesn't rely on screws.</p>
+          <div class="tags"><span>SolidWorks</span><span>Machine Design</span><span>Prototyping</span></div>
+        </div>
+      </article>
+
+      <article class="card">
+        <!-- Replace with: <img src="images/shower-filter.jpg" alt="3D-printed filtered showerhead"> -->
+        <div class="ph">images/shower-filter.jpg</div>
+        <div class="card-body">
+          <span class="status">In progress · Personal project</span>
+          <h3>3D-Printed Filtered Showerhead</h3>
+          <p>A filtered showerhead designed for dorm use, modeled in CAD and 3D printed. Iterating on fit, flow, and filter housing design.</p>
+          <div class="tags"><span>CAD</span><span>3D Printing</span><span>GD&amp;T</span></div>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<section id="experience">
+  <div class="wrap">
+    <h2>Experience</h2>
+
+    <div class="job">
+      <div class="when">Sep 2026 – Present<br>Amherst, MA</div>
+      <div>
+        <h3>Undergraduate Teaching Assistant</h3>
+        <div class="org">UMass Amherst · MIE 230: Thermodynamics I</div>
+        <ul>
+          <li>Design weekly homework problems targeting concepts students struggle with on exams and in office hours</li>
+          <li>Lead weekly help sessions and exam review workshops for a 200+ student course, covering entropy, power and refrigeration cycles, and heat transfer</li>
+          <li>Grade homework and exams, giving written feedback on errors in setup, assumptions, and unit handling</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="job">
+      <div class="when">Jun 2025 – Aug 2026<br>Springfield, MA</div>
+      <div>
+        <h3>HVAC Installation Technician</h3>
+        <div class="org">B&amp;E</div>
+        <ul>
+          <li>Completed ductless mini-split installations on 70+ residential jobs, installing 2–4 zone systems and cutting install time by up to 50% as lead installer</li>
+          <li>Mounted and leveled 100+ condenser brackets and pads for structural stability and proper unit clearance</li>
+          <li>Routed and connected refrigerant line sets and condensate drains; wired condensers and indoor unit communication per manufacturer specs</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="job">
+      <div class="when">May 2023 – Aug 2024<br>Springfield, MA</div>
+      <div>
+        <h3>Cashier</h3>
+        <div class="org">City Cleaners</div>
+        <ul>
+          <li>Managed front-desk operations for a high-volume dry-cleaning business</li>
+          <li>Coordinated special requests with production staff to meet customer deadlines</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="skills">
+  <div class="wrap">
+    <h2>Skills</h2>
+    <div class="skills">
+      <div class="skill-box">
+        <h3>Software</h3>
+        <div class="tags"><span>SolidWorks</span><span>ANSYS</span><span>MATLAB</span><span>Python</span><span>Autodesk Inventor</span><span>Fusion 360</span><span>Excel</span></div>
+      </div>
+      <div class="skill-box">
+        <h3>Engineering</h3>
+        <div class="tags"><span>CAD / 3D Modeling</span><span>CNC Machining</span><span>Manual Machining</span><span>GD&amp;T</span><span>Prototyping</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="about">
+  <div class="wrap two">
+    <div class="about">
+      <h2>About</h2>
+      <p>I'm a mechanical engineering student at UMass Amherst from Springfield, MA. Before college engineering work, I spent a year installing HVAC systems, which gave me a feel for how designs hold up once they leave the drawing and meet a real house.</p>
+      <p>I'm looking for a summer 2027 internship or co-op in mechanical design, HVAC, or building systems. Outside of engineering I play soccer and teach myself piano.</p>
+    </div>
+    <div>
+      <h2>Education</h2>
+      <div class="edu">
+        <h3>University of Massachusetts Amherst</h3>
+        <div class="org">BS Mechanical Engineering · Expected May 2028</div>
+        <p>GPA: 3.79</p>
+        <p style="margin-top:8px">Coursework: Machine Design, Thermodynamics, Fluid Mechanics, Dynamics, Manufacturing Processes, Materials Science</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer id="contact">
+  <div class="wrap">
+    <h2>Contact</h2>
+    <div class="contact-links">
+      <a href="mailto:brandon@umass.edu">brandon@umass.edu</a>
+      <a href="https://linkedin.com/in/brndngyn" target="_blank">LinkedIn</a>
+      <a href="resume.pdf" target="_blank">Resume</a>
+    </div>
+    <p>© 2026 Brandon Nguyen</p>
+  </div>
+</footer>
+
+<script>
+  const root = document.documentElement;
+  const btn = document.getElementById('theme');
+  function setTheme(t) {
+    root.setAttribute('data-theme', t);
+    btn.textContent = t === 'dark' ? '◑ Light' : '◐ Dark';
+    try { localStorage.setItem('theme', t); } catch (e) {}
+  }
+  let saved = null;
+  try { saved = localStorage.getItem('theme'); } catch (e) {}
+  setTheme(saved || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'));
+  btn.addEventListener('click', () => setTheme(root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'));
+
+  const links = document.getElementById('links');
+  document.getElementById('menu').addEventListener('click', () => links.classList.toggle('open'));
+  links.querySelectorAll('a').forEach(a => a.addEventListener('click', () => links.classList.remove('open')));
+</script>
+</body>
+</html>
