@@ -132,6 +132,8 @@ section:last-child { border-bottom: 0; }
 .shot { aspect-ratio: 4 / 3; border-radius: 8px; overflow: hidden; border: 1px solid var(--line); background: var(--side); }
 .shot img { width: 100%; height: 100%; object-fit: cover; transition: transform .4s; }
 .project:hover .shot img { transform: scale(1.03); }
+.shot.logo { background: #FFFFFF; display: flex; align-items: center; justify-content: center; padding: 28px; }
+.shot.logo img { object-fit: contain; width: auto; height: auto; max-width: 70%; max-height: 100%; image-rendering: auto; }
 .meta { display: flex; flex-wrap: wrap; gap: 6px 14px; align-items: center; }
 .pill { font-size: 12px; font-weight: 600; padding: 3px 10px; border-radius: 999px; background: var(--accent-soft); color: var(--accent); }
 .project h3 { font-size: 21px; line-height: 1.3; font-weight: 600; margin: 10px 0 8px; }
@@ -278,7 +280,7 @@ footer { padding: 32px 0 48px; display: flex; justify-content: space-between; fl
       <div class="label"><h2>Projects</h2></div>
 
       <article class="project">
-        <div class="shot"><img src="images/airfoil.jpg" alt="PBAP vs CST airfoil shape comparison" onerror="missing(this)"></div>
+        <div class="shot logo"><img src="images/wind-energy-center.png" alt="UMass Amherst Wind Energy Center logo" onerror="this.onerror=null;this.src='images/airfoil.png'"></div>
         <div>
           <div class="meta"><span class="pill">Research</span><span class="mono">Jun 2026 – Present · In progress</span></div>
           <h3>Physics-Based Airfoil Parameterization Validation</h3>
@@ -287,25 +289,6 @@ footer { padding: 32px 0 48px; display: flex; justify-content: space-between; fl
         </div>
       </article>
 
-      <article class="project">
-        <div class="shot"><img src="images/pot-handle.jpg" alt="Removable pot handle prototype" onerror="missing(this)"></div>
-        <div>
-          <div class="meta"><span class="pill">Product design</span><span class="mono">Fall 2026 · MIE 340 team · In progress</span></div>
-          <h3>Removable Pot Handle / Carabiner</h3>
-          <p>A slip-on removable handle for camping cookware that doubles as a carabiner and multitool. The focus is a secure attachment that doesn't rely on screws.</p>
-          <div class="tags"><span>SolidWorks</span><span>Machine design</span><span>Prototyping</span></div>
-        </div>
-      </article>
-
-      <article class="project">
-        <div class="shot"><img src="images/shower-filter.jpg" alt="3D-printed filtered showerhead" onerror="missing(this)"></div>
-        <div>
-          <div class="meta"><span class="pill">Personal</span><span class="mono">Fall 2026 · In progress</span></div>
-          <h3>3D-Printed Filtered Showerhead</h3>
-          <p>A filtered showerhead designed for dorm use, modeled in CAD and 3D printed. Iterating on fit, flow, and the filter housing.</p>
-          <div class="tags"><span>CAD</span><span>3D printing</span><span>Iteration</span></div>
-        </div>
-      </article>
     </section>
 
     <!-- EXPERIENCE -->
