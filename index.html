@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Brandon Nguyen — Mechanical Engineering Portfolio</title>
+<meta name="description" content="Mechanical engineering portfolio: research, design, and manufacturing.">
+<meta name="theme-color" content="#F7F8FA">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800;900&family=EB+Garamond:wght@500;600&display=swap" rel="stylesheet">
+<style>
+/* =========================================================
+   EDIT HERE: colors, fonts, sizes
+   ========================================================= */
+:root {
+  --accent: #1D3B66;        /* navy. Try #2B4C7E (lighter navy) or #374151 (charcoal) */
+  --paper: #F7F8FA;         /* page background */
+  --paper-2: #FFFFFF;       /* cards */
+  --ink: #111827;           /* headings */
+  --ink-soft: #374151;      /* body text */
+  --ink-mute: #6B7280;      /* small labels */
+  --rule: #D1D5DB;          /* lines */
+  --rule-soft: #E5E7EB;     /* light lines */
+  --display: "Archivo", "Helvetica Neue", Arial, sans-serif;
+  --body: "EB Garamond", Georgia, serif;
+  --mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  --maxw: 1240px;
+  --gutter: 40px;
+  --gap: 120px;
+}
+[data-theme="night"] {
+  --accent: #8FB3E0;
+  --paper: #0F141A;
+  --paper-2: #161C24;
+  --ink: #F3F4F6;
+  --ink-soft: #D1D5DB;
+  --ink-mute: #9CA3AF;
+  --rule: #2D3642;
+  --rule-soft: #1F2731;
+}
+
+/* ---------- base ---------- */
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0; background: var(--paper); color: var(--ink);
+  font-family: var(--body); font-size: 20px; font-weight: 500; line-height: 1.6;
+  transition: background-color .35s, color .35s;
+}
+img { max-width: 100%; display: block; }
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; text-underline-offset: 3px; }
+p { margin: 0 0 1em; color: var(--ink-soft); }
+h1, h2, h3, h4 { font-family: var(--display); color: var(--ink); margin: 0; }
+.wrap { max-width: var(--maxw); margin: 0 auto; padding: 0 var(--gutter); }
+
+.mono {
+  font-family: var(--mono); font-size: 12.5px; font-weight: 500;
+  letter-spacing: .13em; text-transform: uppercase; color: var(--ink-mute); line-height: 1.5;
+}
+
+/* drafting-sheet frame with corner marks */
+.frame-sheet { position: fixed; inset: 10px; pointer-events: none; z-index: 90; border: 1px solid var(--rule-soft); }
+.frame-sheet i { position: absolute; width: 13px; height: 13px; border: 1.5px solid var(--accent); opacity: .55; }
+.frame-sheet i:nth-child(1) { top: -1px; left: -1px; border-right: 0; border-bottom: 0; }
+.frame-sheet i:nth-child(2) { top: -1px; right: -1px; border-left: 0; border-bottom: 0; }
+.frame-sheet i:nth-child(3) { bottom: -1px; left: -1px; border-right: 0; border-top: 0; }
+.frame-sheet i:nth-child(4) { bottom: -1px; right: -1px; border-left: 0; border-top: 0; }
+
+/* ---------- nav ---------- */
+.nav {
+  position: sticky; top: 0; z-index: 100;
+  background: color-mix(in srgb, var(--paper) 90%, transparent);
+  backdrop-filter: blur(10px); border-bottom: 1px solid var(--rule);
+}
+.nav-inner { max-width: var(--maxw); margin: 0 auto; padding: 10px var(--gutter); display: flex; align-items: center; gap: 24px; min-height: 66px; }
+.brand { font-family: var(--display); font-weight: 700; font-size: 17px; letter-spacing: .085em; text-transform: uppercase; color: var(--ink); margin-right: auto; }
+.brand:hover { color: var(--accent); text-decoration: none; }
+.nav-links { display: flex; gap: 26px; align-items: center; }
+.nav-links a { font-family: var(--mono); font-size: 13.5px; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-mute); padding: 12px 0; }
+.nav-links a:hover { color: var(--ink); text-decoration: none; }
+.btn-small {
+  font-family: var(--mono); font-size: 12px; letter-spacing: .12em; text-transform: uppercase;
+  color: var(--ink-mute); background: transparent; border: 1px solid var(--rule);
+  padding: 10px 14px; cursor: pointer; border-radius: 2px;
+}
+.btn-small:hover { color: var(--ink); border-color: var(--ink-mute); }
+#menu { display: none; }
+@media (max-width: 960px) {
+  #menu { display: inline-block; }
+  .nav-links {
+    position: absolute; top: 100%; left: 0; right: 0; display: none;
+    flex-direction: column; align-items: flex-start; gap: 0;
+    background: var(--paper); border-bottom: 1px solid var(--rule); padding: 6px var(--gutter) 20px;
+  }
+  .nav-links.open { display: flex; }
+  .nav-links a { width: 100%; padding: 14px 0; }
+}
+
+/* ---------- sections ---------- */
+section { padding-bottom: var(--gap); scroll-margin-top: 90px; }
+.section-head { display: flex; align-items: baseline; gap: 20px; margin-bottom: 46px; }
+.section-head .mono { color: var(--ink); font-weight: 600; white-space: nowrap; }
+.section-head .line { flex: 1; height: 1px; background: var(--rule); }
+h2.display { font-size: clamp(34px, 5vw, 58px); font-weight: 800; line-height: 1.02; letter-spacing: -.022em; }
+.lede { font-size: clamp(21px, 1.9vw, 25px); color: var(--ink-soft); max-width: 60ch; margin: 18px 0 0; line-height: 1.42; }
+
+/* ---------- buttons ---------- */
+.btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-family: var(--mono); font-size: 12px; letter-spacing: .13em; text-transform: uppercase;
+  padding: 14px 20px; border: 1px solid var(--ink); color: var(--ink); border-radius: 2px;
+  transition: background-color .2s, color .2s, border-color .2s;
+}
+.btn:hover { background: var(--ink); color: var(--paper); text-decoration: none; }
+.btn.primary { background: var(--accent); border-color: var(--accent); color: #fff; }
+.btn.primary:hover { background: var(--ink); border-color: var(--ink); color: var(--paper); }
+.btn.quiet { border-color: var(--rule); color: var(--ink-mute); }
+.btn.quiet:hover { background: transparent; border-color: var(--ink); color: var(--ink); }
+.actions { display: flex; flex-wrap: wrap; gap: 11px; }
+
+/* ---------- hero ---------- */
+.hero { padding-top: 60px; }
+.hero-grid { display: grid; grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr); gap: 64px; align-items: start; }
+.kicker { display: flex; align-items: center; gap: 18px; margin-bottom: 22px; }
+.kicker .line { flex: 1; height: 1px; background: var(--rule); max-width: 360px; }
+.hero h1 { font-size: clamp(56px, 11vw, 136px); font-weight: 900; line-height: .87; letter-spacing: -.04em; text-transform: uppercase; }
+.hero h1 span { display: block; }
+.hero h1 .last { color: var(--accent); }
+.tagline { font-size: clamp(21px, 2vw, 27px); color: var(--ink-soft); max-width: 32ch; margin: 28px 0 32px; line-height: 1.4; }
+.portrait { border: 1px solid var(--rule); padding: 8px; background: var(--paper-2); border-radius: 2px; }
+.portrait .pic { aspect-ratio: 4 / 4.4; overflow: hidden; background: var(--rule-soft); }
+.portrait .pic img { width: 100%; height: 100%; object-fit: cover; }
+.caption { display: flex; align-items: center; gap: 10px; margin-top: 11px; padding-top: 10px; border-top: 1px solid var(--rule); }
+.caption::before { content: ""; width: 18px; height: 1.5px; background: var(--accent); flex: none; }
+
+.factbar { margin-top: 60px; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); }
+.factbar > div { padding: 20px 22px; border-left: 1px solid var(--rule-soft); }
+.factbar > div:first-child { border-left: 0; padding-left: 0; }
+.factbar .v { font-family: var(--display); font-weight: 600; font-size: 18px; color: var(--ink); margin-top: 8px; }
+@media (max-width: 900px) {
+  .hero-grid { grid-template-columns: 1fr; gap: 40px; }
+  .portrait-wrap { max-width: 330px; }
+  .factbar > div { border-left: 0; padding-left: 0; border-top: 1px solid var(--rule-soft); }
+  .factbar > div:first-child { border-top: 0; }
+}
+
+/* ---------- image placeholder (shows until you upload the photo) ---------- */
+.ph {
+  width: 100%; height: 100%; min-height: 140px;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px;
+  text-align: center; padding: 20px; color: var(--ink-mute);
+  background: repeating-linear-gradient(45deg, transparent 0 9px, color-mix(in srgb, var(--ink) 5%, transparent) 9px 10px);
+}
+.ph b { width: 28px; height: 28px; border: 1.5px solid var(--rule); border-radius: 50%; display: grid; place-items: center; font-size: 14px; font-weight: 500; }
+.ph small { font-family: var(--mono); font-size: 11px; letter-spacing: .06em; opacity: .8; word-break: break-all; }
+
+/* ---------- about ---------- */
+.about-grid { display: grid; grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr); gap: 64px; align-items: start; }
+.about-body p { max-width: 68ch; }
+.stats-list { margin-top: 44px; border-top: 1px solid var(--rule); }
+.stats-list .row { display: grid; grid-template-columns: 120px 1fr; gap: 24px; padding: 18px 0; border-bottom: 1px solid var(--rule-soft); align-items: baseline; }
+.stats-list .fig { font-family: var(--display); font-weight: 700; font-size: 30px; color: var(--accent); letter-spacing: -.02em; line-height: 1; }
+.stats-list .row .mono { color: var(--ink); font-weight: 600; }
+.stats-list .txt { font-size: 17.5px; margin-top: 6px; color: var(--ink-soft); line-height: 1.45; }
+.about-photo .pic { aspect-ratio: 4 / 5; }
+@media (max-width: 900px) { .about-grid { grid-template-columns: 1fr; gap: 38px; } .about-photo { max-width: 340px; } }
+
+/* ---------- projects ---------- */
+.cards { display: grid; gap: 34px; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); }
+.card {
+  display: flex; flex-direction: column; background: var(--paper-2);
+  border: 1px solid var(--rule); border-radius: 2px; overflow: hidden;
+  transition: transform .3s, border-color .3s, box-shadow .3s;
+}
+.card:hover { transform: translateY(-4px); border-color: var(--ink-mute); box-shadow: 0 14px 34px -22px rgba(0,0,0,.45); }
+.card:hover h3 { color: var(--accent); }
+.card-media { aspect-ratio: 16 / 10; background: var(--rule-soft); border-bottom: 1px solid var(--rule); position: relative; overflow: hidden; }
+.card-media img { width: 100%; height: 100%; object-fit: cover; transition: transform .5s; }
+.card:hover .card-media img { transform: scale(1.035); }
+.num {
+  position: absolute; left: 0; top: 0; z-index: 2;
+  font-family: var(--display); font-weight: 800; font-size: 14px; letter-spacing: .06em;
+  background: var(--paper-2); color: var(--ink-mute); padding: 7px 12px;
+  border-right: 1px solid var(--rule); border-bottom: 1px solid var(--rule);
+}
+.card-body { padding: 24px 24px 26px; display: flex; flex-direction: column; flex: 1; }
+.card-body .mono.disc { color: var(--accent); margin-bottom: 12px; }
+.card h3 { font-weight: 700; font-size: 24px; line-height: 1.16; letter-spacing: -.014em; transition: color .2s; }
+.card p { font-size: 18.5px; margin: 13px 0 20px; }
+.tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: auto; }
+.tag { font-family: var(--mono); font-size: 10.5px; letter-spacing: .08em; text-transform: uppercase; padding: 6px 9px; border: 1px solid var(--rule); color: var(--ink-mute); border-radius: 2px; }
+.status { display: flex; justify-content: space-between; margin-top: 22px; padding-top: 16px; border-top: 1px solid var(--rule-soft); }
+
+/* ---------- experience ---------- */
+.timeline { border-top: 1px solid var(--rule); }
+.tl { display: grid; grid-template-columns: 215px 1fr; gap: 38px; padding: 38px 0; border-bottom: 1px solid var(--rule-soft); }
+.tl .kind { display: inline-block; margin-top: 11px; padding: 5px 10px; border: 1px solid var(--rule); color: var(--accent); border-radius: 2px; font-size: 10.5px; }
+.tl h3 { font-weight: 700; font-size: 25px; line-height: 1.2; letter-spacing: -.014em; }
+.tl .org { font-size: 19.5px; color: var(--ink-soft); margin-top: 6px; }
+.tl ul { margin: 18px 0 0; padding: 0; list-style: none; }
+.tl li { position: relative; padding-left: 24px; margin-bottom: 11px; color: var(--ink-soft); font-size: 19px; max-width: 70ch; }
+.tl li::before { content: ""; position: absolute; left: 0; top: .62em; width: 12px; height: 1.5px; background: var(--accent); }
+@media (max-width: 760px) { .tl { grid-template-columns: 1fr; gap: 12px; } }
+
+/* ---------- skills ---------- */
+.skill-groups { display: grid; column-gap: 50px; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); border-top: 1px solid var(--rule); }
+.skill-group { padding: 30px 0; border-bottom: 1px solid var(--rule-soft); }
+.skill-group h4 { font-family: var(--mono); font-size: 13.5px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; margin-bottom: 18px; }
+.skill-group ul { list-style: none; margin: 0; padding: 0; }
+.skill-group li { font-size: 18.5px; color: var(--ink-soft); padding: 8px 0; border-bottom: 1px dotted var(--rule); }
+.skill-group li:last-child { border-bottom: 0; }
+
+/* ---------- education ---------- */
+.edu { border: 1px solid var(--rule); background: var(--paper-2); border-radius: 2px; padding: 38px; }
+.edu h3 { font-weight: 700; font-size: 31px; letter-spacing: -.018em; line-height: 1.14; }
+.edu .school { font-size: 20.5px; color: var(--ink-soft); margin-top: 7px; }
+.edu-meta { display: flex; flex-wrap: wrap; gap: 12px 36px; margin-top: 18px; padding-top: 18px; border-top: 1px solid var(--rule-soft); }
+.edu-meta .v { font-size: 18.5px; margin-top: 6px; color: var(--ink); }
+.subhead { margin: 38px 0 18px; display: flex; align-items: center; gap: 16px; }
+.subhead .line { flex: 1; height: 1px; background: var(--rule-soft); }
+.pills { display: flex; flex-wrap: wrap; gap: 8px; }
+.pill { font-size: 16.5px; padding: 8px 14px; border: 1px solid var(--rule); color: var(--ink-soft); border-radius: 2px; background: var(--paper); }
+@media (max-width: 620px) { .edu { padding: 26px 22px; } }
+
+/* ---------- contact + footer ---------- */
+.contact .factbar .v a { color: var(--accent); }
+footer { border-top: 1px solid var(--rule); padding: 28px 0 36px; }
+.foot { display: flex; flex-wrap: wrap; gap: 14px 28px; justify-content: space-between; }
+
+/* ---------- scroll reveal ---------- */
+.reveal { opacity: 0; transform: translateY(18px); }
+.reveal.in { opacity: 1; transform: none; transition: opacity .7s, transform .7s; }
+@media (prefers-reduced-motion: reduce) { .reveal { opacity: 1; transform: none; } html { scroll-behavior: auto; } }
+
+@media (max-width: 1100px) { :root { --gutter: 30px; --gap: 100px; } }
+@media (max-width: 700px) { .frame-sheet { display: none; } }
+@media (max-width: 620px) { :root { --gutter: 20px; --gap: 80px; } body { font-size: 19px; } .card-body { padding: 22px 20px; } }
+</style>
+<script>
+  // If an image file isn't uploaded yet, show a placeholder instead of a broken image.
+  function missing(img) {
+    var d = document.createElement('div');
+    d.className = 'ph';
+    d.innerHTML = '<b>+</b><span class="mono">Image pending</span><small>' + img.getAttribute('src') + '</small>';
+    img.replaceWith(d);
+  }
+</script>
+</head>
+<body>
+
+<div class="frame-sheet" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+
+<header class="nav">
+  <div class="nav-inner">
+    <a href="#top" class="brand">Brandon Nguyen</a>
+    <nav class="nav-links" id="links">
+      <a href="#about">About</a>
+      <a href="#projects">Projects</a>
+      <a href="#experience">Experience</a>
+      <a href="#skills">Skills</a>
+      <a href="#education">Education</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <button class="btn-small" id="menu" aria-label="Menu">Menu</button>
+    <button class="btn-small" id="theme" aria-label="Toggle night mode">◐ Night</button>
+  </div>
+</header>
+
+<main id="top">
+
+<!-- ================= HERO ================= -->
+<section class="hero">
+  <div class="wrap">
+    <div class="hero-grid">
+      <div>
+        <div class="kicker"><span class="mono">Mechanical Engineering · UMass Amherst</span><span class="line"></span></div>
+        <h1><span>Brandon</span><span class="last">Nguyen</span></h1>
+        <p class="tagline">Engineering student working on wind turbine airfoil research, product design, and 3D-printed prototypes.</p>
+        <div class="actions">
+          <a class="btn primary" href="#projects">View projects →</a>
+          <a class="btn" href="Nguyen_Resume.pdf" target="_blank">Resume (PDF)</a>
+          <a class="btn quiet" href="https://linkedin.com/in/brndngyn" target="_blank">LinkedIn</a>
+        </div>
+      </div>
+      <div class="portrait-wrap">
+        <div class="portrait">
+          <div class="pic"><img src="images/headshot.jpg" alt="Brandon Nguyen" onerror="missing(this)"></div>
+          <div class="caption mono">Fig. 01 — Springfield, MA</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="factbar">
+      <div><div class="mono">Major</div><div class="v">Mechanical Engineering</div></div>
+      <div><div class="mono">School</div><div class="v">UMass Amherst</div></div>
+      <div><div class="mono">Graduating</div><div class="v">May 2028</div></div>
+      <div><div class="mono">Seeking</div><div class="v">Summer 2027 internship / co-op</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= ABOUT ================= -->
+<section id="about">
+  <div class="wrap">
+    <div class="section-head reveal"><span class="mono">01 — About</span><span class="line"></span></div>
+    <div class="about-grid">
+      <div class="about-body reveal">
+        <h2 class="display">Built in the field, trained in the lab.</h2>
+        <p class="lede">I'm a mechanical engineering student at UMass Amherst from Springfield, MA.</p>
+        <p style="margin-top:22px">Before most of my engineering coursework, I spent over a year installing ductless HVAC systems, which taught me how designs hold up once they leave the drawing and meet a real house. Now I split my time between airfoil research at the UMass Wind Energy Center, teaching thermodynamics, and building my own projects.</p>
+        <p>I'm looking for a summer 2027 internship or co-op in mechanical design, HVAC, or building systems. Outside engineering, I play soccer and teach myself piano.</p>
+
+        <div class="stats-list">
+          <div class="row"><div class="fig">500+</div><div><div class="mono">XFOIL simulations</div><div class="txt">Run to test whether airfoil shape-fitting accuracy preserves lift and drag performance.</div></div></div>
+          <div class="row"><div class="fig">70+</div><div><div class="mono">HVAC installations</div><div class="txt">Residential mini-split systems, 2–4 zones, as lead installer.</div></div></div>
+          <div class="row"><div class="fig">200+</div><div><div class="mono">Students supported</div><div class="txt">As an undergraduate TA for MIE 230: Thermodynamics I.</div></div></div>
+        </div>
+      </div>
+      <div class="about-photo reveal">
+        <div class="portrait">
+          <div class="pic"><img src="images/about.jpg" alt="Brandon at work" onerror="missing(this)"></div>
+          <div class="caption mono">Fig. 02 — In the shop</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= PROJECTS ================= -->
+<section id="projects">
+  <div class="wrap">
+    <div class="section-head reveal"><span class="mono">02 — Projects</span><span class="line"></span><span class="mono">3 entries</span></div>
+
+    <div class="cards">
+
+      <article class="card reveal">
+        <div class="card-media">
+          <span class="num">01</span>
+          <img src="images/airfoil.jpg" alt="PBAP vs CST airfoil shape comparison" onerror="missing(this)">
+        </div>
+        <div class="card-body">
+          <div class="mono disc">Research · Aerodynamics</div>
+          <h3>Physics-Based Airfoil Parameterization Validation</h3>
+          <p>At the UMass Wind Energy Center, testing whether a physics-based parameterization (PBAP) can match the industry-standard CST method in shape-fitting accuracy, and whether better fits carry over to lift and drag. Built a 42-airfoil database and ran 500+ XFOIL simulations.</p>
+          <div class="tags"><span class="tag">Python</span><span class="tag">XFOIL</span><span class="tag">Optimization</span><span class="tag">Wind energy</span></div>
+          <div class="status"><span class="mono">Jun 2026 – Present</span><span class="mono" style="color:var(--accent)">In progress</span></div>
+        </div>
+      </article>
+
+      <article class="card reveal">
+        <div class="card-media">
+          <span class="num">02</span>
+          <img src="images/pot-handle.jpg" alt="Removable pot handle prototype" onerror="missing(this)">
+        </div>
+        <div class="card-body">
+          <div class="mono disc">Product design · MIE 340 team</div>
+          <h3>Removable Pot Handle / Carabiner</h3>
+          <p>A slip-on removable handle for camping cookware that doubles as a carabiner and multitool. Designed with a team for MIE 340, focused on a secure attachment that doesn't rely on screws.</p>
+          <div class="tags"><span class="tag">SolidWorks</span><span class="tag">Machine design</span><span class="tag">Prototyping</span></div>
+          <div class="status"><span class="mono">Fall 2026</span><span class="mono" style="color:var(--accent)">In progress</span></div>
+        </div>
+      </article>
+
+      <article class="card reveal">
+        <div class="card-media">
+          <span class="num">03</span>
+          <img src="images/shower-filter.jpg" alt="3D-printed filtered showerhead" onerror="missing(this)">
+        </div>
+        <div class="card-body">
+          <div class="mono disc">Personal project · 3D printing</div>
+          <h3>3D-Printed Filtered Showerhead</h3>
+          <p>A filtered showerhead designed for dorm use, modeled in CAD and 3D printed. Iterating on fit, flow, and the filter housing.</p>
+          <div class="tags"><span class="tag">CAD</span><span class="tag">3D printing</span><span class="tag">Iteration</span></div>
+          <div class="status"><span class="mono">Fall 2026</span><span class="mono" style="color:var(--accent)">In progress</span></div>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- ================= EXPERIENCE ================= -->
+<section id="experience">
+  <div class="wrap">
+    <div class="section-head reveal"><span class="mono">03 — Experience</span><span class="line"></span></div>
+    <div class="timeline">
+
+      <div class="tl reveal">
+        <div>
+          <div class="mono">Sep 2026 – Present</div>
+          <div class="mono">Amherst, MA</div>
+          <span class="mono kind">Teaching</span>
+        </div>
+        <div>
+          <h3>Undergraduate Teaching Assistant</h3>
+          <div class="org">UMass Amherst · MIE 230: Thermodynamics I</div>
+          <ul>
+            <li>Design weekly homework problems targeting concepts students struggle with on exams and in office hours</li>
+            <li>Lead weekly help sessions and exam review workshops for a 200+ student course, breaking down entropy, power and refrigeration cycles, and heat transfer into step-by-step problem-solving approaches</li>
+            <li>Grade homework and exams, giving written feedback that pinpoints errors in setup, assumptions, and unit handling</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="tl reveal">
+        <div>
+          <div class="mono">Jun 2025 – Aug 2026</div>
+          <div class="mono">Springfield, MA</div>
+          <span class="mono kind">Field work</span>
+        </div>
+        <div>
+          <h3>HVAC Installation Technician</h3>
+          <div class="org">B&amp;E</div>
+          <ul>
+            <li>Completed ductless mini-split installations on 70+ residential jobs, installing 2–4 zone systems and cutting install time by up to 50% as lead installer</li>
+            <li>Installed and routed condensate drain lines, adding condensate pumps where gravity drainage wasn't feasible</li>
+            <li>Mounted and leveled 100+ condenser brackets and pads for structural stability and proper unit clearance</li>
+            <li>Routed, cut, and connected refrigerant line sets; wired condensers and indoor unit communication per manufacturer specifications</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="tl reveal">
+        <div>
+          <div class="mono">May 2023 – Aug 2024</div>
+          <div class="mono">Springfield, MA</div>
+          <span class="mono kind">Customer service</span>
+        </div>
+        <div>
+          <h3>Cashier</h3>
+          <div class="org">City Cleaners</div>
+          <ul>
+            <li>Managed front-desk operations for a high-volume dry-cleaning business</li>
+            <li>Resolved customer issues and coordinated special requests with production staff to meet deadlines</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ================= SKILLS ================= -->
+<section id="skills">
+  <div class="wrap">
+    <div class="section-head reveal"><span class="mono">04 — Skills</span><span class="line"></span></div>
+    <div class="skill-groups reveal">
+      <div class="skill-group">
+        <h4>CAD &amp; Simulation</h4>
+        <ul><li>SolidWorks</li><li>Autodesk Inventor</li><li>Fusion 360</li><li>ANSYS</li></ul>
+      </div>
+      <div class="skill-group">
+        <h4>Programming &amp; Analysis</h4>
+        <ul><li>Python</li><li>MATLAB</li><li>XFOIL</li><li>Microsoft Excel</li></ul>
+      </div>
+      <div class="skill-group">
+        <h4>Fabrication</h4>
+        <ul><li>CNC machining</li><li>Manual machining</li><li>3D printing &amp; prototyping</li><li>GD&amp;T</li></ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= EDUCATION ================= -->
+<section id="education">
+  <div class="wrap">
+    <div class="section-head reveal"><span class="mono">05 — Education</span><span class="line"></span></div>
+    <div class="edu reveal">
+      <h3>B.S. Mechanical Engineering</h3>
+      <div class="school">University of Massachusetts Amherst</div>
+      <div class="edu-meta">
+        <div><div class="mono">Expected</div><div class="v">May 2028</div></div>
+        <div><div class="mono">GPA</div><div class="v">3.79</div></div>
+        <div><div class="mono">College</div><div class="v">Riccio College of Engineering</div></div>
+      </div>
+      <div class="subhead"><span class="mono">Relevant coursework</span><span class="line"></span></div>
+      <div class="pills">
+        <span class="pill">Machine Design</span><span class="pill">Thermodynamics</span><span class="pill">Fluid Mechanics</span>
+        <span class="pill">Dynamics</span><span class="pill">Manufacturing Processes</span><span class="pill">Materials Science</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= CONTACT ================= -->
+<section id="contact" class="contact">
+  <div class="wrap">
+    <div class="section-head reveal"><span class="mono">06 — Contact</span><span class="line"></span></div>
+    <div class="reveal">
+      <h2 class="display">Let's talk.</h2>
+      <p class="lede">Open to mechanical engineering internships for Summer 2027.</p>
+      <div class="actions" style="margin-top:30px">
+        <a class="btn primary" href="mailto:brandon@umass.edu">Email me →</a>
+        <a class="btn" href="Nguyen_Resume.pdf" target="_blank">Resume (PDF)</a>
+      </div>
+      <div class="factbar">
+        <div><div class="mono">Email</div><div class="v"><a href="mailto:brandon@umass.edu">brandon@umass.edu</a></div></div>
+        <div><div class="mono">LinkedIn</div><div class="v"><a href="https://linkedin.com/in/brndngyn" target="_blank">in/brndngyn</a></div></div>
+        <div><div class="mono">Location</div><div class="v">Amherst / Springfield, MA</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap foot">
+    <span class="mono">© 2026 Brandon Nguyen</span>
+    <a class="mono" href="#top">Back to top ↑</a>
+  </div>
+</footer>
+
+<script>
+  // Night mode
+  var root = document.documentElement, themeBtn = document.getElementById('theme');
+  function setTheme(t) {
+    if (t === 'night') root.setAttribute('data-theme', 'night'); else root.removeAttribute('data-theme');
+    themeBtn.textContent = t === 'night' ? '◑ Day' : '◐ Night';
+    try { localStorage.setItem('theme', t); } catch (e) {}
+  }
+  var saved = null; try { saved = localStorage.getItem('theme'); } catch (e) {}
+  setTheme(saved || 'day');
+  themeBtn.onclick = function () { setTheme(root.getAttribute('data-theme') === 'night' ? 'day' : 'night'); };
+
+  // Mobile menu
+  var links = document.getElementById('links');
+  document.getElementById('menu').onclick = function () { links.classList.toggle('open'); };
+  links.querySelectorAll('a').forEach(function (a) { a.onclick = function () { links.classList.remove('open'); }; });
+
+  // Fade sections in on scroll
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.reveal').forEach(function (el) { io.observe(el); });
+</script>
+</body>
+</html>
